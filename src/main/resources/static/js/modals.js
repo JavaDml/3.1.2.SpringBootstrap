@@ -23,34 +23,10 @@ $(document).ready(function (){
             $('.deleteForm #id1').attr('readonly','readonly').val(user.id);
             $('.deleteForm #username1').attr('readonly','readonly').val(user.name);
             $('.deleteForm #password1').attr('readonly','readonly').val(user.password);
-            let newOption = new Option('role.role', '1');
-            $('.deleteForm #roles1').add(newOption);
+            $('.deleteForm #roles1').empty();
+            user.roles.forEach(role => $('.deleteForm #roles1').append(new Option(role.role)));
+            $('.deleteForm #deleteFormBody').attr('action', '/admin/del_user/'+(user.id));
 
-/*            user.roles.forEach(role => $('.deleteForm #roles1').attr('readonly','readonly').);
-            if($('.deleteForm #roles1').options.clear()) {
-                for (let i = 0; i < $('.deleteForm #roles1').options.length; i++) {
-                    $('.deleteForm #roles1').options[i] = null;
-                }
-            }
-            $('.deleteForm #roles1').options.clear();
-            user.roles.forEach(role => {
-                let newOption = new Option(role.role, '');
-                $('.deleteForm #roles1').add(newOption);
-            });*/
         });
     })
-
-/*    $(' .table .dBtn').on('click', function (event){
-        event.preventDefault();
-        let href = $(this).attr('href');
-        $.get(href, function (user) {
-            $('.deleteForm #id1').attr('readonly','readonly').val(user.id);
-            $('.deleteForm #username1').attr('readonly','readonly').val(user.name);
-            $('.deleteForm #password1').attr('readonly','readonly').val(user.password);
-
-        });
-
-        $('.deleteForm #exampleModal').modal();
-
-    });*/
 });

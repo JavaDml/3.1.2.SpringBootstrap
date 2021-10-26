@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://thymeleaf.org">
-<html lang="ru">
+<html lang="en">
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -36,8 +36,8 @@
     <div class="row">
         <div class="col bg-white">
             <nav class="nav nav-pills flex-column">
-                <a href="/user" class="nav-link active">Admin</a>
-                <a href="/client" class="nav-link">User</a>
+                <a th:href="@{/admin/crud_user}" class="nav-link active">Admin</a>
+                <a th:href="@{/user/show_my_user}" class="nav-link">User</a>
             </nav>
         </div>
 
@@ -86,10 +86,6 @@
                                 <a th:href="@{/admin/get_user/{id} (id=${user.getId()}) }" class="btn btn-primary eBtn">Edit</a>
                             </td>
 
-<!--                            <td><a th:href="@{/admin/get_user/{id} (id=${user.getId()}) }" class="btn btn-danger dBtn"
-                                   data-toggle="modal"
-                            th:data-target="${'#delete' + user.getId()}">Delete</a></td>-->
-
                             <td>
                                 <button type="button" class="btn btn-danger" data-bs-toggle="modal"
                                         data-bs-target="#deleteModal" th:data-bs-whatever="@{/admin/get_user/{id} (id=${user.getId()}) }">
@@ -104,7 +100,6 @@
 
                 <!--         Delete user            -->
                 <div class="deleteForm">
-                    <div th:each="user, state : ${user}">
                         <div class="modal fade" id="deleteModal" aria-hidden="true"
                              role="dialog" aria-labelledby="deleteModal">
                             <div class="modal-dialog">
@@ -117,8 +112,7 @@
                                         <div style="text-align: center;">
                                             <div class="row justify-content-center align-items-center">
                                                 <form class="text-center" th:method="POST"
-                                                      th:action="@{/admin/del_user/{id} (id=${user.getId()}) }"
-                                                      th:object="${user}">
+                                                      id="deleteFormBody">
                                                     <div class="form-group font-weight-bold">
                                                         <div class="form-group m-3">
                                                             <label for="id1"
@@ -138,19 +132,18 @@
                                                                    name="password" value="" />
                                                         </div>
 
-                                                        <div class="form-group m-3">
+                                                        <div class="form-group m-3" readonly="readonly">
                                                             <label for="roles1">Role</label>
                                                             <select class="form-select w-100 "
                                                                     size="2"
                                                                     id="roles1"
                                                                     name="checkBoxRoles">
-                                                                <option value=""></option>
                                                             </select>
                                                         </div>
 
                                                         <div class="modal-footer">
                                                             <button type="button" class="btn btn-secondary"
-                                                                    data-dismiss="modal">Close
+                                                                    data-bs-dismiss="modal">Close
                                                             </button>
                                                             <input type="submit" class="btn btn-danger"
                                                                    value="Delete"/>
@@ -163,14 +156,13 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
                 </div>
 
                 <!--            Edit user           -->
                 <div class="myForm">
                     <div style="text-align: center;">
                         <div class="row justify-content-center align-items-center">
-                            <form th:action="@{/user}" th:object="${user}" th:method="POST">
+                            <form th:action="@{/user}" th:method="POST">
                                 <div class="modal fade" id="exampleModal" tabindex="-1"
                                      aria-labelledby="exampleModalLabel" aria-hidden="true">
                                     <div class="modal-dialog">
@@ -228,8 +220,7 @@
                                                             <select class="form-select w-100"
                                                                     style="border: 3px solid cyan;" size="2"
                                                                     id="editRole" name="checkRoles">
-                                                                <option th:each="role : ${allRoles}"
-                                                                        th:text="${role.name}"></option>
+
                                                             </select>
                                                         </div>
                                                     </div>
@@ -254,7 +245,7 @@
                 <div class="tab-pane fade" id="new" role="tabpanel" aria-labelledby="new-tab">
                     <h5 class="card-header">Add new user</h5>
                     <div class="row justify-content-center align-items-center">
-                        <form class="text-center" th:action="@{/user}" th:object="${user}" th:method="POST">
+                        <form class="text-center" th:action="@{/user}" th:method="POST">
                             <div class="form-group font-weight-bold">
 
                                 <div class="form-group m-3">
@@ -275,8 +266,7 @@
 
                                     <label for="role">Role</label>
                                     <select class="form-select w-100" size="2" id="role" name="checkBoxRoles">
-                                        <option th:each="role : ${allRoles}"
-                                                th:text="${role.name}"></option>
+
                                     </select>
 
                                     <button type="submit" class="btn btn-success">Add new user</button>

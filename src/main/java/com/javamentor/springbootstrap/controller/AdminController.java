@@ -101,8 +101,8 @@ public class AdminController {
         return userService.getUsers();
     }
 
-    @ModelAttribute("user")
+/*    @ModelAttribute("User")
     public User getNewUser() {
-        return userService.getUser(1L);
-    }
+        return new User();
+    }*/
 }

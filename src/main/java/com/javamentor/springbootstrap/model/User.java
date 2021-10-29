@@ -63,8 +63,9 @@ public class User implements UserDetails {
     public String getRolesToString() {
         String rolesToString = "";
         for(Role role : roles) {
-            rolesToString = rolesToString + role.getRole() + " ";
+            rolesToString = rolesToString + role.getRole() + "; ";
         }
+        rolesToString = rolesToString.substring(0, rolesToString.length()-2);
         return rolesToString;
     }
 

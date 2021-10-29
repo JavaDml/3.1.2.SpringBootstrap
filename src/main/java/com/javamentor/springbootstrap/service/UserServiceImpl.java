@@ -36,22 +36,16 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public void updUser(User user, boolean encPass) {
+    public void addOrEditUser(User user, boolean encPass) {
         if(encPass == true) {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
         }
-        userDao.updUser(user);
+        userDao.addOrEditUser(user);
     }
 
     @Override
     public List<User> getUsers() {
         return userDao.getUsers();
-    }
-
-    @Override
-    public void addUser(User user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        userDao.addUser(user);
     }
 
     @Override

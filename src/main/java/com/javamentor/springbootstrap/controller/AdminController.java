@@ -27,27 +27,27 @@ public class AdminController {
     @GetMapping("/crud_user")
     public String GetUsers(Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        //User user = (User) auth.getPrincipal();
         model.addAttribute("CurrentUser", auth.getPrincipal());
         return "admin/crud_user";
     }
 
-    // Add new User
-    @PostMapping("/add_user")
-    public String AddUser(@ModelAttribute("User") User user
-            ,@RequestParam(value = "ROLE_ADMIN", required = false) String role_admin
-            ,@RequestParam(value = "ROLE_USER", required = false) String role_user) {
+    // Add or Edit User
+    @PostMapping("/addOrEdit_user")
+    public String addUser(@ModelAttribute ("User") User user
+            ,@RequestParam(value = "originalPass", required = false) String originalPass
+            ,@RequestParam(value = "checkBoxRoles", required = false) String[] rolesSelector) {
         if((user.getName() != null) & (user.getPassword() != null)) {
             Set<Role> roles = new HashSet<>();
-            if(role_admin != null) {
-                roles.add(userService.getRole("ROLE_ADMIN"));
-            }
-            if(role_user != null) {
-                roles.add(userService.getRole("ROLE_USER"));
+            for(String role : rolesSelector) {
+                roles.add(new Role(role));
             }
             if(!roles.isEmpty()){
                 user.setRoles(roles);
-                userService.addUser(user);
+                if( (user.getId() == null) || !(user.getPassword().equals(originalPass)) ){
+                    userService.addOrEditUser(user, true);
+                } else {
+                    userService.addOrEditUser(user, false);
+                }
             }
         }
         return "redirect:/admin/crud_user";
@@ -59,35 +59,6 @@ public class AdminController {
     public User GetUser(@PathVariable("id") Long id) {
         return userService.getUser(id);
     }
-/*    public String EditUsers(Model model, @PathVariable("id") Long id) {
-        model.addAttribute("EditingUser", userService.getUser(id));
-        return "admin/upd_user";
-    }*/
-
-    @PostMapping("/upd_current_user")
-    public String UpdateUser(@ModelAttribute("EditingUser") User user
-            ,@RequestParam(value = "ROLE_ADMIN", required = false) String role_admin
-            ,@RequestParam(value = "ROLE_USER", required = false) String role_user
-            ,@RequestParam(value = "oldPassword", required = false) String oldPassword) {
-        if((user.getName() != null) & (user.getPassword() != null)) {
-            Set<Role> roles = new HashSet<>();
-            if(role_admin != null) {
-                roles.add(userService.getRole("ROLE_ADMIN"));
-            }
-            if(role_user != null) {
-                roles.add(userService.getRole("ROLE_USER"));
-            }
-            if(!roles.isEmpty()){
-                user.setRoles(roles);
-                if(user.getPassword().equals(oldPassword)) {
-                    userService.updUser(user, false);
-                } else {
-                    userService.updUser(user, true);
-                }
-            }
-        }
-        return "redirect:/admin/crud_user";
-    }
 
     // Delete User
     @PostMapping("/del_user/{id}")
@@ -96,13 +67,14 @@ public class AdminController {
         return "redirect:/admin/crud_user";
     }
 
+
     @ModelAttribute("Users")
     public List<User> ListUsers() {
         return userService.getUsers();
     }
 
-/*    @ModelAttribute("User")
+    @ModelAttribute("User")
     public User getNewUser() {
         return new User();
-    }*/
+    }
 }

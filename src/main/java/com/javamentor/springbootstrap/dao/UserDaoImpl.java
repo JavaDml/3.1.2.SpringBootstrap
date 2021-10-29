@@ -22,7 +22,7 @@ public class UserDaoImpl implements UserDao {
     private PasswordEncoder passwordEncoder;
 
     @Override
-    public void addUser(User user) {
+    public void addOrEditUser(User user) {
         entityManager.merge(user);
     }
 
@@ -34,11 +34,6 @@ public class UserDaoImpl implements UserDao {
     @Override
     public User getUser(Long id) {
         return entityManager.find(User.class, id);
-    }
-
-    @Override
-    public void updUser(User user) {
-        entityManager.merge(user);
     }
 
     @Override
@@ -66,7 +61,7 @@ public class UserDaoImpl implements UserDao {
         Role adminRole = new Role("ROLE_ADMIN");
         entityManager.persist(new User("Tom", passwordEncoder.encode("12345"), new HashSet<Role>(){{add(userRole);}}));
         entityManager.persist(new User("Mike", passwordEncoder.encode("123"), new HashSet<Role>(){{add(userRole); add(adminRole);}}));
-        entityManager.persist(new User("Ivan", passwordEncoder.encode("000"), new HashSet<Role>(){{add(adminRole);}}));
+        entityManager.persist(new User("Ivan", passwordEncoder.encode("123"), new HashSet<Role>(){{add(adminRole);}}));
     }
 
 }

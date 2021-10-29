@@ -25,8 +25,8 @@ $(document).ready(function (){
             $('.editForm #username2').val(user.name);
             $('.editForm #password2').val(user.password);
             $('.editForm #originalPass').val(user.password);
-            /*$('.editForm #roles2 option:first').prop('selected', false);
-            $('.editForm #roles2 option:last').prop('selected', false);*/
+            $('.editForm #roles2 option:first').prop('selected', false);
+            $('.editForm #roles2 option:last').prop('selected', false);
             user.roles.forEach(role => {
                 if(role.role == "USER_ROLE") {
                     $('.editForm #roles2 option[value=USER_ROLE]').prop('selected', true);

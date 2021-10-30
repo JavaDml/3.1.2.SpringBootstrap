@@ -15,6 +15,8 @@ public class User implements UserDetails {
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+    private String surname;
+    private Integer age;
     private String password;
 
     @ManyToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER) //нужно добавить fetch=FetchType.EAGER в свои аннотации ManyToMany, чтобы автоматически извлекать дочерние объекты
@@ -26,8 +28,10 @@ public class User implements UserDetails {
 
     public User() {}
 
-    public User(String name, String password, Set<Role> roles) {
+    public User(String name, String surname, Integer age, String password, Set<Role> roles) {
         this.name = name;
+        this.surname = surname;
+        this.age = age;
         this.password = password;
         this.roles = roles;
     }
@@ -46,6 +50,22 @@ public class User implements UserDetails {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
+    public Integer getAge() {
+        return age;
+    }
+
+    public void setAge(Integer age) {
+        this.age = age;
     }
 
     public void setPassword(String password) {

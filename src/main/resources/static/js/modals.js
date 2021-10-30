@@ -10,7 +10,8 @@ $(document).ready(function (){
         $.get(href, function (user) {
             $('.deleteForm #id1').attr('readonly','readonly').val(user.id);
             $('.deleteForm #username1').attr('readonly','readonly').val(user.name);
-            $('.deleteForm #password1').attr('readonly','readonly').val(user.password);
+            $('.deleteForm #surname1').attr('readonly','readonly').val(user.surname);
+            $('.deleteForm #age1').attr('readonly','readonly').val(user.age);
             $('.deleteForm #roles1').empty();
             user.roles.forEach(role => $('.deleteForm #roles1').append(new Option(role.role)));
             $('.deleteForm #deleteFormBody').attr('action', '/admin/del_user/'+(user.id));
@@ -23,6 +24,8 @@ $(document).ready(function (){
         $.get(href, function (user) {
             $('.editForm #id2').val(user.id);
             $('.editForm #username2').val(user.name);
+            $('.editForm #surname2').val(user.surname);
+            $('.editForm #age2').val(user.age);
             $('.editForm #password2').val(user.password);
             $('.editForm #originalPass').val(user.password);
             $('.editForm #roles2 option:first').prop('selected', false);

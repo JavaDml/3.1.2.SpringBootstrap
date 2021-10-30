@@ -59,9 +59,9 @@ public class UserDaoImpl implements UserDao {
     public void createDataTables() {
         Role userRole = new Role("ROLE_USER");
         Role adminRole = new Role("ROLE_ADMIN");
-        entityManager.persist(new User("Tom", passwordEncoder.encode("12345"), new HashSet<Role>(){{add(userRole);}}));
-        entityManager.persist(new User("Mike", passwordEncoder.encode("123"), new HashSet<Role>(){{add(userRole); add(adminRole);}}));
-        entityManager.persist(new User("Ivan", passwordEncoder.encode("123"), new HashSet<Role>(){{add(adminRole);}}));
+        entityManager.persist(new User("Tom", "Anderson", 54, passwordEncoder.encode("12345"), new HashSet<Role>(){{add(userRole);}}));
+        entityManager.persist(new User("Mike", "Kyk", 36, passwordEncoder.encode("123"), new HashSet<Role>(){{add(userRole); add(adminRole);}}));
+        entityManager.persist(new User("Ivan", "Petrov", 20, passwordEncoder.encode("123"), new HashSet<Role>(){{add(adminRole);}}));
     }
 
 }
